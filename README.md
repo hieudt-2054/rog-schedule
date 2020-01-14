@@ -1,2 +1,1 @@
-# rog-schedule
-###Rog Schedule Project 2020
+### Rog Schedule Project 2020
