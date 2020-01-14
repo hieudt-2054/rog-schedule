@@ -18,7 +18,7 @@ jobs:
             - vendor
 
       # run test
-      
+
       - run: phpcs --standard=Framgia app
       - run:
           name: Sending notification
@@ -54,3 +54,38 @@ jobs:
                 " \
                 "https://api.chatwork.com/v2/rooms/$CHATWORK_ROOM/messages"
             fi
+  deploy:
+    docker:
+      - image: circleci/php:7.2-browsers
+    working_directory: ~/laravel
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "be:0e:77:8d:2d:00:7c:02:7d:59:7d:c8:99:9d:f2:b5"
+      - run:
+          name: Install Deployer
+          command: |
+            curl -LO https://deployer.org/deployer.phar
+            sudo mv deployer.phar /usr/local/bin/dep
+            sudo chmod +x /usr/local/bin/dep
+      - run:
+          name: Deploy
+          command: |
+            if [ -z `ssh-keygen -F '35.240.156.156'` ]; then
+              ssh-keyscan -H '35.240.156.156' >> ~/.ssh/known_hosts
+            fi
+            dep deploy -vvv
+
+
+workflows:
+  version: 2
+  notify_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: develop
