@@ -11,9 +11,7 @@
 - [PHP >= 7.2.18](https://www.php.net/downloads.php)
 - [Mysql >= 5.7](https://dev.mysql.com/downloads/installer/)
 - [Nginx > = nginx/1.15.7](https://www.nginx.com/resources/wiki/start/topic/tutorials/install/)
-- [Redis >= 4.0.11](https://redis.io/topics/quickstart)
-- [Node >= v8.11.3](https://nodejs.org/en/download/)
-- [Yarn >= 1.7.0](https://yarnpkg.com/en/docs/install#debian-stable)
+- [Yarn >= 1.15.0](https://yarnpkg.com/en/docs/install#debian-stable)
 
 ## Setup
 
@@ -49,7 +47,7 @@ chmod -R 777 bootstrap/cache
 - Go into the `workspace` container
 
 ```BASH
-docker exec -it rog_workspace bash
+docker exec -it rogschedule_workspace bash
 ```
 
 ```BASH
@@ -59,15 +57,11 @@ php artisan key:generate
 
 - Install node modules
 ```BASH
-npm install
-#or
 yarn install
 ```
 
 - Build
 ```BASH
-npm run dev
-#or
 yarn run dev
 ```
 
@@ -77,11 +71,11 @@ yarn run dev
 # Check Docker Container list, copy the `workspace` container name
 docker ps
 # Go into the `workspace` container
-docker exec -it rog_workspace bash
+docker exec -it rogschedule_workspace bash
 # Run migration
 php artisan migrate --seed
 # Or running outside the docker container
-docker exec -it rog_workspace php artisan migrate --seed
+docker exec -it rogschedule_workspace php artisan migrate --seed
 ```
 
 - If you want run project on your local instead of Docker, just skip all step about docker and create virtual host. And modify `.env` config of `DB_HOST`, `DB_HOST_TEST`, `REDIS_HOST` to `127.0.0.1`
