@@ -1,5 +1,8 @@
 # The Rog Schedule Project
 
+[![CircleCI](https://circleci.com/gh/hieudt-2054/rog-schedule.svg?style=svg)](https://circleci.com/gh/hieudt-2054/rog-schedule)
+[![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/Laravel/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
+
 ## Requirements
 
 - [Laravel 6.x](https://laravel.com/docs/6.x)
