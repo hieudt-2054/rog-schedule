@@ -10,6 +10,9 @@ app/storage/
 # Laravel 5 & Lumen specific
 public/storage
 public/hot
+public/build
+public/mix-manifest.json
+package-lock.json
 
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage
@@ -26,6 +29,7 @@ Homestead.json
 # Docker
 .docker/
 
+yarn.lock
 /public/js
 /public/css
 /public/image
