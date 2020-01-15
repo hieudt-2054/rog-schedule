@@ -18,3 +18,8 @@ Route::get('/', function () {
 Route::get('helloword', function () {
     return "Hello Word Auto Deploy";
 });
+
+Route::get('hello', function () {
+    return "Hello Word Auto Deploy 2 ";
+});
+
