@@ -11,15 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('helloword', function () {
-    return "Hello Word Auto Deploy";
-});
-
-Route::get('hello', function () {
-    return "Hello Word Auto Deploy 2 ";
-});
+Route::get('{path}', function () {
+    return view('index');
+})->where('path', '(.*)');
 
