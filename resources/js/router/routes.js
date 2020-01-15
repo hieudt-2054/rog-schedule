@@ -1,8 +1,6 @@
 /* eslint-disable */
-function page (path) {
-    return () => import(`@/pages/${path}`).then(m => m.default || m)
-}
+import welcome from '@/pages/welcome.vue'
 
 export default [
-    { path: '/', name: 'welcome', component: page('welcome.vue') }
+    { path: '/', name: 'welcome', component: welcome }
 ]

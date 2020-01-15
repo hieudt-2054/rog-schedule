@@ -9,6 +9,10 @@ mix.webpackConfig({
       'public' : path.resolve('public'),
     },
   },
+  output: { 
+    chunkFilename: 'js/chunks/[name].js?id=[chunkhash]',
+    publicPath: '/',
+  }
 })
 
 // mix.copyDirectory('resources/img', 'public/img');
