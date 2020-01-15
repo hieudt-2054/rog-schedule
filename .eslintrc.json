@@ -5,8 +5,9 @@
         "es6": true
     },
     "extends": [
-        "eslint:recommended"
-        // "plugin:vue/essential"
+        "eslint:recommended",
+        "plugin:vue/essential",
+        "standard"
     ],
     "globals": {
         "trans": true,
@@ -17,15 +18,9 @@
         "$": true
     },
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2017,
+        "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    // "plugins": [
-    //     "vue"
-    // ],
     "rules": {
         "indent": [
             "error",
