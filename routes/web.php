@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('helloword', function () {
+    return "Hello Word Auto Deploy";
+});
