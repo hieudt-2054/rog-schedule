@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-layout">
       <v-app light>
     <v-toolbar color="white">
       <v-toolbar-title v-text="title"></v-toolbar-title>
@@ -14,16 +14,16 @@
             class="white--text"
           >
             <img src="assets/vuetify.png" alt="Vuetify.js" height="200">
-            <h1 class="white--text mb-2 display-1 text-center">RogTeam Schedule</h1>
-            <div class="subheading mb-4 text-center">Powered by RogTeam</div>
+            <h1 class="white--text mb-2 display-1 text-center">Parallax Template</h1>
+            <div class="subheading mb-4 text-center">Powered by Vuetify</div>
             <v-btn
               class="mt-12"
               color="blue lighten-2"
               dark
               large
-              href="/"
+              href="/pre-made-themes"
             >
-              Signin with Google
+              Get Started
             </v-btn>
           </v-layout>
         </v-parallax>
@@ -188,23 +188,12 @@
   </div>
 </template>
 
-<style scoped>
-.top-right {
-  position: absolute;
-  right: 10px;
-  top: 18px;
-}
-
-.title {
-  font-size: 85px;
-}
-</style>
 <script>
 export default {
-  data () {
-    return {
-      title: 'Hello'
-    }
-  }
+    data () {
+        return {
+            title: 'Your Logo',
+        }
+    },
 }
 </script>
