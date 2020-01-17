@@ -17,4 +17,5 @@ new Vue({
     el: '#app',
     render: h => h(App),
     router,
+    vuetify: new Vuetify(),
 })

@@ -18,7 +18,7 @@ mix.webpackConfig({
 // mix.copyDirectory('resources/img', 'public/img');
 
 mix.js('resources/js/app.js', 'public/build/js');
-
+mix.copyDirectory('resources/images/', 'public/assets/');
 mix.sass('resources/sass/app.scss', 'public/build/css');
 mix.styles(['public/build/css/vendor.css', 'public/build/css/app.css'], 'public/css/app.css');
 mix.scripts(['public/build/js/app.js', 'public/build/js/vendor.js'], 'public/js/app.js');
