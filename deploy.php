@@ -10,7 +10,7 @@ set('application', 'rog_schedule');
 set('repository', 'git@github.com:hieudt-2054/rog-schedule.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true);
+set('git_tty', false);
 
 // Setup amount version release
 set('keep_releases', 5);
