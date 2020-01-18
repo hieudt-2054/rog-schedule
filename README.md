@@ -1,7 +1,12 @@
 # The Rog Schedule Project
 
 [![CircleCI](https://circleci.com/gh/hieudt-2054/rog-schedule.svg?style=svg)](https://circleci.com/gh/hieudt-2054/rog-schedule)
+
 [![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/Laravel/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
+
+[![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/Code_Quality/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
+
+[![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/ROGLabel/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
 
 ## Requirements
 
