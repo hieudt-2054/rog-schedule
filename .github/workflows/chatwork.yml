@@ -1,0 +1,50 @@
+name: Notification
+on: [pull_request]
+
+jobs:
+  Notification:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Wait for status checks
+      id: waitforstatuschecks
+      uses: WyriHaximus/github-action-wait-for-status@master
+      with:
+        ignoreActions: Notification
+        checkInterval: 13
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    - name: State Pull Request
+      if: steps.waitforstatuschecks.outputs.status == 'success'
+      run: |
+        if [[ true ]];  then
+          curl -X POST -H "X-ChatWorkToken: ${{ secrets.CW_TOKEN }}" -d \
+            "body=
+            [toall][info][title] Build ${{ github.run_number }}| Status : Success [/title]- Action Pull Request: https://github.com/${{ github.repository }}/actions
+        - Author: ${{ github.actor }}
+        - Branch Pull From: ${{ github.head_ref }}
+        - Branch Pull To: ${{ github.base_ref }}
+        - Changes File : ${{ github.event.pull_request.changed_files }}
+        - Comments: ${{ github.event.pull_request.comments }}
+        - Commits: ${{ github.event.pull_request.commits }}
+        - Review Comments: ${{ github.event.pull_request.review_comments }}[/info]
+            " \
+            "https://api.chatwork.com/v2/rooms/${{ secrets.CW_ROOM }}/messages"
+        fi
+    - name: State Pull Failure
+      if: steps.waitforstatuschecks.outputs.status == 'failure'
+      run: |
+        if [[ true ]];  then
+          curl -X POST -H "X-ChatWorkToken: ${{ secrets.CW_TOKEN }}" -d \
+            "body=
+            [toall][info][title] Build ${{ github.run_number }}| Status : Fail [/title]- Action Pull Request: https://github.com/${{ github.repository }}/actions
+        - Author: ${{ github.actor }}
+        - Branch Pull From: ${{ github.head_ref }}
+        - Branch Pull To: ${{ github.base_ref }}
+        - Changes File : ${{ github.event.pull_request.changed_files }}
+        - Comments: ${{ github.event.pull_request.comments }}
+        - Commits: ${{ github.event.pull_request.commits }}
+        - Review Comments: ${{ github.event.pull_request.review_comments }}
+            [/info]
+            " \
+            "https://api.chatwork.com/v2/rooms/${{ secrets.CW_ROOM }}/messages"
+        fi
