@@ -41,6 +41,14 @@ host('35.240.156.156')
     ->set('deploy_path', '~/{{application}}')
     ->forwardAgent(false);
 
+// Rog AWS Staging
+host('rogaws.gq')
+    ->user('deploy')
+    ->stage('staging')
+    ->set('deploy_path', '~/{{application}}')
+    ->forwardAgent(false);
+
+
 // Writable dirs by web server
 add('writable_dirs', [
     'bootstrap/cache',
@@ -111,15 +119,8 @@ before('deploy:symlink', 'clear-config');
 // Reload PHP-FPM
 task('reload:php-fpm', function() {
     $stage = input()->hasArgument('stage') ? input()->getArgument('stage') : null;
+    run('sudo /etc/init.d/php7.3-fpm reload');
 
-    switch ($stage) {
-        case 'staging':
-            run('sudo systemctl reload php-fpm');
-            break;
-
-        default:
-            run('sudo /etc/init.d/php7.3-fpm reload');
-    }
 })->desc('PHP7 FPM reloaded');
 
 after('cleanup', 'reload:php-fpm');
