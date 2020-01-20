@@ -14,9 +14,10 @@ jobs:
           if [[ true ]];  then
             curl -X POST -H "X-ChatWorkToken: ${{ secrets.CW_TOKEN }}" -d \
               "body=
-              [toall][info][title] New Request Submitted [/title]- New comment URL: ${{ github.event.review.html_url }}
+              [toall][info][title] New Request Submitted [/title]- New submitted URL: ${{ github.event.review.html_url }}
           - Author: ${{ github.event.review.user.login }} ( ${{ github.event.review.user.html_url }} )
-          - Submitted at: ${{ github.event.review.submitted_at }}[/info]
+          - Submitted at: ${{ github.event.review.submitted_at }}
+          - Type: ${{ github.event.review.state }}[/info]
               " \
               "https://api.chatwork.com/v2/rooms/${{ secrets.CW_ROOM }}/messages"
           fi
