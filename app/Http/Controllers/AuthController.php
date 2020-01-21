@@ -2,26 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AuthService;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserStoreRequest;
 
 class AuthController extends Controller
 {
     /**
-     * @var SocialAccountService
+     * @var AuthService
      */
-    private $userRepo;
+    private $authService;
 
     /**
-     * @param socialAccountService
+     * @param AuthService
      */
-    public function __construct(UserRepositoryInterface $userRepo)
+    public function __construct(AuthService $authService)
     {
-        $this->userRepo = $userRepo;
+        $this->authService = $authService;
     }
 
-    public function dumpData()
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UserStoreRequest $request)
     {
-        return response()->json($this->userRepo->all());
+        return $this->authService->register($request);
+    }
+
+    /**
+     * Login Request Function
+     *
+     * @param UserLoginRequest $request
+     * @return JsonResponse
+     */
+    public function login(UserLoginRequest $request)
+    {
+        return $this->authService->login($request);
     }
 }

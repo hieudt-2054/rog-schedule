@@ -13,8 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::name('dump')->get('/dump', 'AuthController@dumpData');
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['json.response']], function () {
+    // Public Routes
+    Route::post('/register', 'AuthController@store')->name('register.api');
+    Route::post('/login', 'AuthController@login')->name('login.api');
+    // Private routes
+    Route::middleware('auth:api')->get('/user', function (Request $request) {
+        return $request->user();
+    });
 });
