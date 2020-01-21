@@ -23,6 +23,7 @@
         "vue": "^2.6.10",
         "vue-i18n": "^8.11.2",
         "vue-meta": "^1.6.0",
+        "vue-page-transition": "^0.2.2",
         "vue-router": "^3.0.6",
         "vuetify": "^2.2.4",
         "vuetify-loader": "^1.4.3",
