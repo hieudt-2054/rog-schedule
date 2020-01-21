@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 import App from '@/components/App'
 import routes from '@/router/routes'
 import Vuetify from 'vuetify'
+import VuePageTransition from 'vue-page-transition'
 
+Vue.use(VuePageTransition)
 Vue.use(VueRouter)
 Vue.use(Vuetify)
 
