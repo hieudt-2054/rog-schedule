@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::name('dump')->get('/dump', 'AuthController@dumpData');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
