@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use PDOException;
+use UnexpectedValueException;
 
 class Handler extends ExceptionHandler
 {
@@ -34,6 +36,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
+            app('sentry')->captureException($exception);
+        }
+
         parent::report($exception);
     }
 
