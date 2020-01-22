@@ -14,7 +14,7 @@ export default [
         path: '/login',
         name: 'login',
         component: login,
-        meta: { transition: 'zoom' },
+        meta: { transition: 'fade' },
     },
     {
         path: '/me',

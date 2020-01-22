@@ -64,7 +64,7 @@
                 <v-btn color="blue-grey lighten-3" to="/">Back</v-btn>
                 <v-btn
                   color="primary"
-                  @click="this.submit('login')"
+                  @click="this.submit"
                   :loading="login.loading"
                   v-if="login.isLoggingIn"
                 >

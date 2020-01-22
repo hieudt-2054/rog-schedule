@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Contracts\UserRepositoryInterface;
@@ -37,15 +38,24 @@ class AuthService
      */
     public function register($request)
     {
-        $request['password'] = Hash::make($request['password']);
-        $user = $this->userRepository->create($request->toArray());
-        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-        $response = [
-            'user' => $user,
-            'access_token' => $token,
-        ];
-    
-        return response()->json($response, 200);
+        DB::beginTransaction();
+        try {
+            $request['password'] = Hash::make($request['password']);
+            $user = $this->userRepository->create($request->toArray());
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            $response = [
+                'user' => $user,
+                'access_token' => $token,
+            ];
+            DB::commit();
+            
+            return $response;
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            report($ex);
+
+            return false;
+        }
     }
 
     /**
@@ -56,19 +66,25 @@ class AuthService
      */
     public function login($request)
     {
-        $credentials = request(['email', 'password']);
-        if (!Auth::attempt($credentials)) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-        
-        $user = $this->userRepository->first('email', $request->email);
-        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        try {
+            $credentials = request(['email', 'password']);
+            if (!Auth::attempt($credentials)) {
+                return response()->json([
+                    'message' => trans('errors.401'),
+                ], 401);
+            }
+            
+            $user = $this->userRepository->first('email', $request->email);
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
 
-        return response()->json([
-            'user' => $user,
-            'access_token' => $token,
-        ]);
+            return [
+                'user' => $user,
+                'access_token' => $token,
+            ];
+        } catch (\Exception $ex) {
+            report($ex);
+
+            return false;
+        }
     }
 }

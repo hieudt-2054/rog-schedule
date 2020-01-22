@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\AuthService;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserStoreRequest;
@@ -24,10 +23,10 @@ class AuthController extends Controller
     }
 
      /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in stor\Illuminate\Http\Responseage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return @return JsonResponse
      */
     public function store(UserStoreRequest $request)
     {
