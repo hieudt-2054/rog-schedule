@@ -1,4 +1,9 @@
-JS Library Change: package.json
-Composer Library Change: composer.json
-FrontEnd: resources/**/*
-BackEnd: app/**/*
+JS Library: package.json
+Composer Library: composer.json
+Frontend: resources/**/*
+Backend: app/**/*
+Unit Test: tests/**/*
+CircleCI Config: .circleci/**/*
+Github Action: .github/**/*
+Docker: .docker/**/*
+Documentation: README.md
