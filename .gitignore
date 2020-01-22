@@ -28,6 +28,8 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+.env.testing
+coverage/
 
 # Docker
 .docker/

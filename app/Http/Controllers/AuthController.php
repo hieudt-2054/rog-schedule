@@ -30,7 +30,7 @@ class AuthController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        return $this->authService->register($request);
+        return $this->authService->register($request->all());
     }
 
     /**

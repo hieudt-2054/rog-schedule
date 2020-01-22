@@ -41,7 +41,7 @@ class AuthService
         DB::beginTransaction();
         try {
             $request['password'] = Hash::make($request['password']);
-            $user = $this->userRepository->create($request->toArray());
+            $user = $this->userRepository->create($request);
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
             $response = [
                 'user' => $user,
@@ -54,7 +54,7 @@ class AuthService
             DB::rollBack();
             report($ex);
 
-            return false;
+            return $ex;
         }
     }
 
@@ -67,14 +67,16 @@ class AuthService
     public function login($request)
     {
         try {
-            $credentials = request(['email', 'password']);
+            $credentials = [
+                'email' => $request->get('email'),
+                'password' => $request->get('password'),
+            ];
             if (!Auth::attempt($credentials)) {
                 return response()->json([
                     'message' => trans('errors.401'),
                 ], 401);
             }
-            
-            $user = $this->userRepository->first('email', $request->email);
+            $user = $this->userRepository->first('email', $request->get('email'));
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
 
             return [
