@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
@@ -42,5 +43,17 @@ class AuthController extends Controller
     public function login(UserLoginRequest $request)
     {
         return $this->authService->login($request);
+    }
+
+    /**
+     * Revoke the access token from the authenticated user.
+     *
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        return response()->json(['success' => $request->user()->token()->revoke()]);
     }
 }
