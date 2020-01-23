@@ -1,6 +1,6 @@
 /* eslint-disable */
 import welcome from '@/pages/welcome.vue'
-import login from '@/pages/login.vue'
+import login from '@/modules/auth/views/Login.vue'
 import Admin from '@/components/Admin.vue'
 import Dashboard from '@/components/dashboard/views/Dashboard.vue'
 
@@ -20,6 +20,9 @@ export default [
         path: '/me',
         component: Admin,
         name: 'Dashboard',
+        meta: {
+            requiresAuth: true,
+        },
         redirect: '/',
         children: [
             {

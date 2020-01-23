@@ -80,46 +80,66 @@
         color="blue darken-3"
         dark
         >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <v-toolbar-title
-            style="width: 300px"
-            class="ml-0 pl-4"
-        >
-            <span class="hidden-sm-and-down">Google Contacts</span>
-        </v-toolbar-title>
-        <v-text-field
-            flat
-            solo-inverted
-            hide-details
-            prepend-inner-icon="mdi-magnify"
-            label="Search"
-            class="hidden-sm-and-down"
-        />
-        <v-spacer />
-        <v-btn icon>
-            <v-icon>mdi-apps</v-icon>
-        </v-btn>
-        <v-btn icon>
-            <v-icon>mdi-bell</v-icon>
-        </v-btn>
-        <v-btn
-            icon
-            large
-        >
-            <v-avatar
-            size="32px"
-            item
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+            <v-toolbar-title
+                style="width: 300px"
+                class="ml-0 pl-4"
             >
-            <v-img
-                src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-                alt="Vuetify"
-            /></v-avatar>
-        </v-btn>
+                <span class="hidden-sm-and-down">Google Contacts</span>
+            </v-toolbar-title>
+            <v-text-field
+                flat
+                solo-inverted
+                hide-details
+                prepend-inner-icon="mdi-magnify"
+                label="Search"
+                class="hidden-sm-and-down"
+            />
+            <v-spacer />
+            <v-btn icon>
+                <v-icon>mdi-apps</v-icon>
+            </v-btn>
+            <v-btn icon>
+                <v-icon>mdi-bell</v-icon>
+            </v-btn>
+            <v-menu
+                transition="slide-y-transition"
+                bottom
+                offset-y
+            >
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                        icon
+                        v-on="on"
+                    >
+                        <v-icon>mdi-account</v-icon>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item
+                      v-for="(item, i) in userMenu"
+                      :key="i"
+                      @click="() => {}"
+                    >
+                        <v-list-item-title @click="_funcCall(item.method)">
+                            <v-icon>{{ item.icon }}</v-icon> {{ item.title }}
+                        </v-list-item-title>
+                    </v-list-item>
+              </v-list>
+            </v-menu>
         </v-app-bar>
     </div>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex'
+import Cookies from 'js-cookie'
+
 export default {
+    computed: {
+        ...mapState({
+            user: state => state.auth.user,
+        }),
+    },
     data: () => ({
         drawer: null,
         items: [
@@ -154,6 +174,26 @@ export default {
             { icon: 'mdi-cellphone-link', text: 'App downloads' },
             { icon: 'mdi-keyboard', text: 'Go to the old version' },
         ],
+        userMenu: [
+            { title: 'Profile', icon: 'mdi-note', method: 'none' },
+            { title: 'Log out', icon: 'mdi-logout', method: 'logoutAndRedirect' },
+        ],
     }),
+    methods: {
+        ...mapActions({
+            logout: 'auth/logout',
+        }),
+
+        async logoutAndRedirect () {
+            await this.logout()
+            localStorage.clear()
+            Cookies.remove('vuex')
+            this.$router.push('/login')
+        },
+
+        _funcCall (funcName) {
+            this[funcName]()
+        },
+    },
 }
 </script>

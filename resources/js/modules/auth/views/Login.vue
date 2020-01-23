@@ -20,13 +20,13 @@
                 dark
                 flat
               >
-                <v-toolbar-title v-if="login.isLoggingIn">Login Your Account</v-toolbar-title>
+                <v-toolbar-title v-if="login.isBtnLoggingIn">Login Your Account</v-toolbar-title>
                 <v-toolbar-title v-else>Register New An Account</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 <v-form>
                   <v-text-field
-                    v-if="!login.isLoggingIn"
+                    v-if="!login.isBtnLoggingIn"
                     v-model="login.payload.name"
                     light="light"
                     prepend-icon="mdi-account-card-details"
@@ -51,11 +51,12 @@
                   />
 
                   <v-text-field
-                    v-if="!login.isLoggingIn"
+                    v-if="!login.isBtnLoggingIn"
                     v-model="login.payload.password_confirmation"
                     light="light"
                     prepend-icon="mdi-textbox-password"
                     label="Password Confirm"
+                    type="password"
                   />
                 </v-form>
               </v-card-text>
@@ -64,27 +65,27 @@
                 <v-btn color="blue-grey lighten-3" to="/">Back</v-btn>
                 <v-btn
                   color="primary"
-                  @click="this.submit"
-                  :loading="login.loading"
-                  v-if="login.isLoggingIn"
+                  @click="this.signin"
+                  :loading="isLoading"
+                  v-if="login.isBtnLoggingIn"
                 >
                   Login
                 </v-btn>
                 <v-btn
                   color="primary"
-                  @click="this.submit"
-                  :loading="login.loading"
+                  @click="this.signup"
+                  :loading="isLoading"
                   v-else
                 >
                   Register
                 </v-btn>
               </v-card-actions>
             </v-card>
-            <div align="center" class="mt-4" v-if="login.isLoggingIn">Don't have an account?
-              <v-btn light="light" @click="login.isLoggingIn = false">Sign up</v-btn>
+            <div align="center" class="mt-4" v-if="login.isBtnLoggingIn">Don't have an account?
+              <v-btn light="light" @click="login.isBtnLoggingIn = false">Sign up</v-btn>
             </div>
             <div align="center" class="mt-4" v-else>Have an account?
-              <v-btn light="light" @click="login.isLoggingIn = true">Sign In</v-btn>
+              <v-btn light="light" @click="login.isBtnLoggingIn = true">Sign In</v-btn>
             </div>
           </v-col>
         </v-row>
@@ -93,24 +94,56 @@
   </v-app>
 </template>
 <script>
+import { mapState, mapGetters } from 'vuex'
+
 export default {
     data () {
         return {
             login: {
                 payload: {},
-                isLoggingIn: true,
-                loading: false,
+                isBtnLoggingIn: true,
             },
+            httpResponseStatusCode: this.$route.query.code,
+        }
+    },
+    watch: {
+        isLoggedIn () {
+            return this.$router.push({
+                path: '/me',
+            })
+        },
+    },
+    computed: {
+        ...mapState({
+            isLoading: state => state.auth.loading,
+            error: state => state.auth.error,
+            token: state => state.auth.token,
+        }),
+
+        ...mapGetters({
+            isLoggedIn: 'auth/isLoggedIn',
+        }),
+    },
+    beforeMount () {
+        if (this.isLoggedIn) {
+            return this.$router.push({
+                path: '/me',
+            })
         }
     },
     methods: {
-        submit (params = null) {
-            if (params) {
-                this.$router.push({
-                    path: '/me',
-                })
-            }
-            this.login.loading = true
+        async signin () {
+            await this.$store.dispatch('auth/login', {
+                vue: this,
+                params: this.login.payload,
+            })
+        },
+
+        async signup () {
+            await this.$store.dispatch('auth/register', {
+                vue: this,
+                params: this.login.payload,
+            })
         },
     },
 }
