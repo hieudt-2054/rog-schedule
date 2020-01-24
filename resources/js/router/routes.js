@@ -2,7 +2,7 @@
 import welcome from '@/pages/welcome.vue'
 import login from '@/modules/auth/views/Login.vue'
 import Admin from '@/components/Admin.vue'
-import Dashboard from '@/components/dashboard/views/Dashboard.vue'
+import HelloWord from '@/modules/dashboard/views/HelloWord.vue'
 
 export default [
     {
@@ -27,7 +27,7 @@ export default [
         children: [
             {
                 path: '/',
-                component: Dashboard,
+                component: HelloWord,
             }
         ]
     }
