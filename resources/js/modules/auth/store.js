@@ -46,7 +46,7 @@ const actions = {
             ConfigAxios.setAuthorizationHeader('Bearer', token.access_token)
             commit(AUTH_SET_TOKEN, token)
         } catch (e) {
-            const errors = e.response.data.errors
+            const errors = e.response.data
             if (errors) {
                 commit(AUTH_SET_ERROR, errors)
             } else {
@@ -73,7 +73,7 @@ const actions = {
             ConfigAxios.setAuthorizationHeader('Bearer', token.access_token)
             commit(AUTH_SET_TOKEN, token)
         } catch (e) {
-            const errors = e.response.data.errors
+            const errors = e.response.data
             if (errors) {
                 commit(AUTH_SET_ERROR, errors)
             } else {

@@ -48,7 +48,7 @@ class AuthService
                 'access_token' => $token,
             ];
             DB::commit();
-            
+
             return $response;
         } catch (\Exception $ex) {
             DB::rollBack();
@@ -84,6 +84,42 @@ class AuthService
                 'access_token' => $token,
             ];
         } catch (\Exception $ex) {
+            report($ex);
+
+            return false;
+        }
+    }
+
+    public function exists($conditional)
+    {
+        $user = $this->userRepository->findOne($conditional);
+
+        return $user ? true : false;
+    }
+
+    public function handleSocialAuth($data)
+    {
+        DB::beginTransaction();
+        try {
+            $user = $this->exists(['email' => $data->user['email']]);
+            if (!$user) {
+                $user = $this->userRepository->create([
+                    'name' => $data->user['name'],
+                    'email' => $data->user['email'],
+                    'password' => bcrypt($data->user['id']),
+                ]);
+            } else {
+                $user = $this->userRepository->first('email', $data->user['email']);
+            }
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            DB::commit();
+
+            return response()->json([
+                'user' => $user,
+                'access_token' => $token,
+            ]);
+        } catch (\Exception $ex) {
+            DB::rollBack();
             report($ex);
 
             return false;
