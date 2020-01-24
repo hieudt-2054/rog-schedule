@@ -9,11 +9,21 @@ mix.webpackConfig({
       'public' : path.resolve('public'),
     },
   },
-  output: { 
+  output: {
     chunkFilename: 'js/chunks/[name].js?id=[chunkhash]',
     publicPath: '/',
-  }
-})
+  },
+});
+
+mix.webpackConfig(webpack => {
+    return {
+        plugins: [
+            new webpack.EnvironmentPlugin (
+                ['GOOGLE_URL']
+            )
+        ]
+    };
+});
 
 // mix.copyDirectory('resources/img', 'public/img');
 
@@ -23,3 +33,4 @@ mix.sass('resources/sass/app.scss', 'public/build/css');
 mix.styles(['public/build/css/vendor.css', 'public/build/css/app.css'], 'public/css/app.css');
 mix.scripts(['public/build/js/app.js', 'public/build/js/vendor.js'], 'public/js/app.js');
 mix.version();
+

@@ -8,7 +8,6 @@ import VuePageTransition from 'vue-page-transition'
 import VueSocialauth from 'vue-social-auth'
 import VueAxios from 'vue-axios'
 import axios from 'axios'
-import VuetifyToast from 'vuetify-toast-snackbar'
 
 Vue.use(VuePageTransition)
 Vue.use(VueRouter)
@@ -18,11 +17,10 @@ Vue.use(VueSocialauth, {
     providers: {
         google: {
             clientId: '231305375976-dbi9dm5tl921lag839uigau57gmnn1rh.apps.googleusercontent.com',
-            redirectUri: 'http://localhost:2021/auth/google/callback', // Your client app URL
+            redirectUri: process.env.MIX_GOOGLE_URL,
         },
     },
 })
-Vue.use(VuetifyToast)
 
 const router = new VueRouter({
     mode: 'history',
