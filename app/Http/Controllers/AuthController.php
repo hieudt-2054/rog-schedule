@@ -7,6 +7,7 @@ use App\Services\AuthService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserStoreRequest;
+use Socialite;
 
 class AuthController extends Controller
 {
@@ -55,5 +56,12 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         return response()->json(['success' => $request->user()->token()->revoke()]);
+    }
+
+    public function socialLogin($provider)
+    {
+        $user = Socialite::driver($provider)->stateless()->user();
+
+        return $this->authService->handleSocialAuth($user);
     }
 }

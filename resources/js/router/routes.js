@@ -17,6 +17,12 @@ export default [
         meta: { transition: 'fade' },
     },
     {
+        path: '/auth/:provide/callback',
+        component: {
+            template: '<div class="auth-component"></div>'
+        },
+    },
+    {
         path: '/me',
         component: Admin,
         name: 'Dashboard',
