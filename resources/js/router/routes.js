@@ -2,7 +2,7 @@
 import welcome from '@/pages/welcome.vue'
 import login from '@/modules/auth/views/Login.vue'
 import Admin from '@/components/Admin.vue'
-import HelloWord from '@/modules/dashboard/views/HelloWord.vue'
+import Calendar from '@/modules/dashboard/views/Calendar.vue'
 
 export default [
     {
@@ -33,7 +33,7 @@ export default [
         children: [
             {
                 path: '/',
-                component: HelloWord,
+                component: Calendar,
             }
         ]
     }

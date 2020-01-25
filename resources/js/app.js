@@ -21,7 +21,7 @@ Vue.use(VueSocialauth, {
         },
     },
 })
-
+Vue.config.silent = true
 const router = new VueRouter({
     mode: 'history',
     routes,

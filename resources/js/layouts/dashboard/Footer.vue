@@ -11,67 +11,129 @@
           >
             <v-icon>mdi-plus</v-icon>
         </v-btn>
-        <v-dialog
-          v-model="dialog"
-          width="800px"
-        >
+        <v-dialog v-model="dialog" width="800px">
           <v-card>
-            <v-card-title class="grey darken-2">
-              Create contact
+            <v-card-title class="primary white--text">
+              Create Schedule
             </v-card-title>
             <v-container>
               <v-row class="mx-2">
-                <v-col
-                  class="align-center justify-space-between"
-                  cols="12"
-                >
-                  <v-row
-                    align="center"
-                    class="mr-0"
+                <v-col class="align-center justify-space-between" cols="12">
+                  <v-text-field
+                    label="Title"
+                    prepend-icon="mdi-format-title"
+                  />
+                </v-col>
+                <v-col cols="6">
+                  <v-menu
+                    v-model="dialogStartDate"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="290px"
                   >
-                    <v-avatar
-                      size="40px"
-                      class="mx-3"
-                    >
-                      <img
-                        src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
-                        alt=""
-                      >
-                    </v-avatar>
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="payload.startDate"
+                        label="Picker Start Date"
+                        prepend-icon="mdi-calendar-today"
+                        readonly
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="payload.startDate" @input="dialogStartDate = false"></v-date-picker>
+                  </v-menu>
+                </v-col>
+                <v-col cols="6">
+                  <v-menu
+                  ref="dialogStartTime"
+                  v-model="dialogStartTime"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="payload.startTime"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
                     <v-text-field
-                      placeholder="Name"
-                    />
-                  </v-row>
+                      v-model="payload.startTime"
+                      label="Picker Start Time"
+                      prepend-icon="mdi-timer"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="dialogStartTime"
+                    v-model="payload.startTime"
+                    full-width
+                    format="24hr"
+                    @click:minute="$refs.dialogStartTime.save(payload.startTime)"
+                  ></v-time-picker>
+                </v-menu>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field
-                    prepend-icon="mdi-account-card-details-outline"
-                    placeholder="Company"
-                  />
+                  <v-menu
+                    v-model="dialogEndDate"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="payload.endDate"
+                        label="Picker End Date"
+                        prepend-icon="mdi-calendar-today"
+                        readonly
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="payload.endDate" @input="dialogEndDate = false"></v-date-picker>
+                  </v-menu>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field
-                    placeholder="Job title"
-                  />
+                  <v-menu
+                  ref="dialogEndTime"
+                  v-model="dialogEndTime"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="payload.startTime"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="payload.endTime"
+                      label="Picker End Time"
+                      prepend-icon="mdi-timer"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="dialogEndTime"
+                    v-model="payload.endTime"
+                    full-width
+                    format="24hr"
+                    @click:minute="$refs.dialogEndTime.save(payload.endTime)"
+                  ></v-time-picker>
+                </v-menu>
                 </v-col>
-                <v-col cols="12">
+                <v-col class="align-center justify-space-between" cols="12">
                   <v-text-field
-                    prepend-icon="mdi-mail"
-                    placeholder="Email"
-                  />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
-                    type="tel"
-                    prepend-icon="mdi-phone"
-                    placeholder="(000) 000 - 0000"
-                  />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
+                    label="Details"
                     prepend-icon="mdi-text"
-                    placeholder="Notes"
                   />
+                </v-col>
+                <v-col cols="12">
+                  <v-color-picker class="ma-2" v-model="payload.color"></v-color-picker>
                 </v-col>
               </v-row>
             </v-container>
@@ -99,6 +161,22 @@
 export default {
     data: () => ({
         dialog: false,
+        dialogStartDate: false,
+        dialogStartTime: false,
+        dialogEndDate: false,
+        dialogEndTime: false,
+        dialogColor: false,
+        date: '',
+        time: null,
+        payload: {
+            startDate: null,
+            startTime: null,
+            endDate: null,
+            endTime: null,
+            color: {
+                hex: null,
+            },
+        },
     }),
 }
 </script>
