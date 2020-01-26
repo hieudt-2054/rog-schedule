@@ -21,5 +21,8 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::middleware('auth:api')->group(function () {
         // Auth routes.
         Route::post('/logout', 'AuthController@logout')->name('logout.api');
+
+        // Standard Routes
+        Route::resource('/schedule', 'ScheduleController', ['except' => ['create', 'edit', 'index']]);
     });
 });
