@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as Cookies from 'js-cookie'
 import auth from '@/modules/auth/store'
+import schedule from '@/modules/schedule/store'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
@@ -9,6 +10,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     modules: {
         auth,
+        schedule,
     },
     plugins: [createPersistedState({
         paths: [

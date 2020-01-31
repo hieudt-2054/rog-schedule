@@ -52,6 +52,24 @@ class ScheduleController extends Controller
         return response()->json($schedule);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  Schedule  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getAll()
+    {
+        if (auth()->user()->id) {
+            $schedule = $this->scheduleService->getAllScheduleByAuthId();
+        } else {
+            $schedule = [];
+            $schedule['message'] = 'Failed Permission';
+        }
+
+        return response()->json($schedule);
+    }
+
      /**
      * Update the specified resource in storage.
      *
