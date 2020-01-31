@@ -20,5 +20,10 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Contracts\UserRepositoryInterface::class,
             \App\Repositories\Eloquents\UserRepository::class
         );
+
+        $this->app->singleton(
+            \App\Repositories\Contracts\ScheduleRepositoryInterface::class,
+            \App\Repositories\Eloquents\ScheduleRepository::class
+        );
     }
 }
