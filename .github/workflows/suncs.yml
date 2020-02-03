@@ -11,4 +11,4 @@ jobs:
     - name: Running PHPCS Standard Sun Asterisk
       uses: hieudt/sun-phpcs@master
       with:
-        path: 'app'
+        path: 'app/ tests/'
