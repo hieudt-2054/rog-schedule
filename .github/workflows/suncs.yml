@@ -1,5 +1,11 @@
 name: Code_Quality
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   sun-phpcs:
