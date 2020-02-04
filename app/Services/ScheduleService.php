@@ -113,4 +113,21 @@ class ScheduleService
 
         return $schedule;
     }
+
+    public function getAllScheduleByAuthId()
+    {
+        $schedules = $this->scheduleRepository->findByCondition('user_id', auth()->user()->id);
+
+        $schedules = $schedules->map(function ($schedule) {
+            return [
+                'color' => $schedule->color_code,
+                'start' => $schedule->start,
+                'end' => $schedule->end,
+                'name' => $schedule->name,
+                'details' => $schedule->description,
+            ];
+        });
+
+        return $schedules;
+    }
 }

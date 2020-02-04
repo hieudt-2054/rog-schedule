@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 
 export default {
     data: () => ({
@@ -156,8 +157,21 @@ export default {
                 timeZone: 'UTC', month: 'long',
             })
         },
+
+        ...mapState({
+            schedules: state => state.schedule.schedules,
+        }),
     },
+
+    mounted () {
+        this.getSchedule()
+    },
+
     methods: {
+        async getSchedule () {
+            await this.$store.dispatch('schedule/actionGetScheduleByUser')
+            this.events = this.schedules
+        },
         viewDay ({ date }) {
             this.focus = date
             this.type = 'day'
