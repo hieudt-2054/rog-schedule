@@ -22,6 +22,7 @@
                   <v-text-field
                     label="Title"
                     prepend-icon="mdi-format-title"
+                    v-model="payload.name"
                   />
                 </v-col>
                 <v-col cols="6">
@@ -102,7 +103,7 @@
                   v-model="dialogEndTime"
                   :close-on-content-click="false"
                   :nudge-right="40"
-                  :return-value.sync="payload.startTime"
+                  :return-value.sync="payload.endTime"
                   transition="scale-transition"
                   offset-y
                   max-width="290px"
@@ -130,6 +131,7 @@
                   <v-text-field
                     label="Details"
                     prepend-icon="mdi-text"
+                    v-model="payload.description"
                   />
                 </v-col>
                 <v-col cols="12">
@@ -150,7 +152,7 @@
               >Cancel</v-btn>
               <v-btn
                 text
-                @click="dialog = false"
+                @click="dialog = false, submit()"
               >Save</v-btn>
             </v-card-actions>
           </v-card>
@@ -158,6 +160,8 @@
     </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
     data: () => ({
         dialog: false,
@@ -169,6 +173,8 @@ export default {
         date: '',
         time: null,
         payload: {
+            name: '',
+            description: '',
             startDate: null,
             startTime: null,
             endDate: null,
@@ -178,5 +184,35 @@ export default {
             },
         },
     }),
+    computed: {
+        ...mapState({
+            token: state => state.auth.token,
+            storeSuccess: state => state.schedule.storeSuccess
+        }),
+    },
+    methods: {
+        ...mapActions({
+            storeSchedule: 'schedule/storeSchedule',
+        }),
+
+        async submit () {
+            const data = {
+                name: this.payload.name,
+                user_id: this.token.user.id,
+                description: this.payload.description,
+                start: this.payload.startDate + ' ' + this.payload.startTime,
+                end: this.payload.endDate + ' ' + this.payload.endTime,
+                color_code: this.payload.color.hex,
+            }
+
+            await this.storeSchedule({
+                vue: this,
+                params: data,
+            })
+            if (this.storeSuccess) {
+                await this.$store.dispatch('schedule/actionGetScheduleByUser')
+            }
+        },
+    },
 }
 </script>

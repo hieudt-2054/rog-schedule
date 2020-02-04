@@ -9,4 +9,13 @@ export default class ScheduleService {
             .then(response => response)
             .catch(error => error.response)
     }
+
+    /**
+     * @param { object } schedule
+     *
+     * @returns {AxiosPromise<any>}
+     */
+    static store (payload) {
+        return axios.post('/api/schedule', payload)
+    }
 }
