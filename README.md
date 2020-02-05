@@ -105,6 +105,6 @@ php artisan vendor:publish --provider="Sentry\Laravel\ServiceProvider"
 
 - PhpMyAdmin : `127.0.0.1:8181`
 - Edited at : 21H PM
-- Changes
+- Changes !!
 
 ```
