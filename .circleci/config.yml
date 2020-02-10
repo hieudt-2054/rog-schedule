@@ -62,7 +62,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "$FINGER_KEY"
+            - "$DEPLOY_KEY"
       - run:
           name: Install Deployer
           command: |
