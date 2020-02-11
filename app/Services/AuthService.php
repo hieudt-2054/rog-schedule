@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\UserLogin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +79,7 @@ class AuthService
             }
             $user = $this->userRepository->first('email', $request->get('email'));
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            event(new UserLogin($user));
 
             return [
                 'user' => $user,
@@ -113,6 +115,7 @@ class AuthService
             }
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
             DB::commit();
+            event(new UserLogin($user));
 
             return response()->json([
                 'user' => $user,

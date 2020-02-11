@@ -11,6 +11,7 @@
 |
 */
 Route::get('exc', function () {
+    Log::debug('Exception Sentry Test');
     throw new Exception('Nothing');
 });
 Route::post('sociallogin/{provider}', 'AuthController@socialLogin');
