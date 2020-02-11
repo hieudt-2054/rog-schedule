@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('exc', function () {
+    throw new Exception('Nothing');
+});
 Route::post('sociallogin/{provider}', 'AuthController@socialLogin');
 Route::post('auth/{provider}', 'AuthController@index')->where('vue', '.*');
 Route::post('auth/{provider}/callback', 'AuthController@index')->where('vue', '.*');

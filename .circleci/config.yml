@@ -62,7 +62,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "$DEPLOY_KEY"
+            - "$FINGER_KEY"
       - run:
           name: Install Deployer
           command: |
@@ -82,13 +82,10 @@ workflows:
   version: 2
   notify_deploy:
     jobs:
-      - build:
-            filters:
-                branches:
-                    only: develop
+      - build
       - deploy:
           requires:
             - build
           filters:
             branches:
-              only: master
+              only: develop
