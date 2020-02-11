@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
         /*
          * Application Service Providers...
          */

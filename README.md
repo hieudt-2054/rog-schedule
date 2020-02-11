@@ -5,7 +5,7 @@
 [![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/Code_Quality/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
 [![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/ROGLabel/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
 
-## Requirements
+## Requirements Environments
 
 - [Laravel 6.x](https://laravel.com/docs/6.x)
 - [Docker >= 18.06.1-ce](https://docs.docker.com/install)
@@ -14,7 +14,14 @@
 - [Mysql >= 5.7](https://dev.mysql.com/downloads/installer/)
 - [Nginx > = nginx/1.15.7](https://www.nginx.com/resources/wiki/start/topic/tutorials/install/)
 - [Yarn >= 1.15.0](https://yarnpkg.com/en/docs/install#debian-stable)
+
+
+## Library Usage
 - [Sentry SDK](https://sentry.io)
+- [Laravel Socialite](https://laravel.com/docs/6.x/socialite)
+- [Laravel Passport](https://laravel.com/docs/6.x/passport)
+- [Vuex](https://vuex.vuejs.org/guide/)
+- [Vuetify](https://vuetifyjs.com/en/)
 
 ## Setup
 
@@ -97,14 +104,12 @@ Add SENTRY_LARAVEL_DSN key to .env
 php artisan vendor:publish --provider="Sentry\Laravel\ServiceProvider"
 ```
 
+## Application Monitor
+```BASH
+# change LOG_CHANNEL from stack to daily in .env
+APP_URL=http://localhost
 
-
-## NOTE
-```
-- Note to add HASH CODE when creating new files on the project
-
-- PhpMyAdmin : `127.0.0.1:8181`
-- Edited at : 21H PM
-- Changes !!
+LOG_CHANNEL=daily
+Go to http://localhost:2021/log-viewer
 
 ```
