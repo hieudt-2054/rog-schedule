@@ -4,6 +4,7 @@
 [![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/Laravel/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
 [![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/Code_Quality/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
 [![GithubAction](https://github.com/hieudt-2054/rog-schedule/workflows/ROGLabel/badge.svg)](https://github.com/hieudt-2054/rog-schedule)
+[![Known Vulnerabilities](https://snyk.io/test/github/hieudt-2054/rog-schedule/badge.svg?targetFile=package.json)](https://snyk.io/test/github/hieudt-2054/rog-schedule?targetFile=package.json)
 
 ## Requirements Environments
 
