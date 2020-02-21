@@ -72,10 +72,10 @@ jobs:
       - run:
           name: Deploy
           command: |
-            if [ -z `ssh-keygen -F '35.240.156.156'` ]; then
-              ssh-keyscan -H '35.240.156.156' >> ~/.ssh/known_hosts
+            if [ -z `ssh-keygen -F 'rogaws.gq'` ]; then
+              ssh-keyscan -H 'rogaws.gq' >> ~/.ssh/known_hosts
             fi
-            dep deploy -vvv
+            dep deploy staging -vvv
 
 
 workflows:
