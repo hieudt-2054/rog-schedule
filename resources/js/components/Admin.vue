@@ -1,7 +1,9 @@
 <template>
   <v-app id="inspire">
     <app-header></app-header>
-    <router-view></router-view>
+    <vue-page-transition name="fade">
+        <router-view></router-view>
+    </vue-page-transition>
     <app-footer></app-footer>
   </v-app>
 </template>

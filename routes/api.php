@@ -22,6 +22,7 @@ Route::group(['middleware' => ['json.response']], function () {
         // Auth routes.
         Route::post('/logout', 'AuthController@logout')->name('logout.api');
         Route::get('/schedule', 'ScheduleController@getAll')->name('schedule.getall');
+        Route::post('/generate2FA', 'PasswordSecurityController@generate2faSecret')->name('2fa.generate');
 
         // Standard Routes
         Route::resource('/schedule', 'ScheduleController', ['except' => ['create', 'edit', 'index']]);
