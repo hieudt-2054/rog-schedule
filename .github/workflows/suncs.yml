@@ -8,7 +8,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: Running PHPCS Standard Sun Asterisk
-      uses: hieudt/sun-phpcs@master
-      with:
-        path: 'app'
+    # - name: Running PHPCS Standard Sun Asterisk
+    #   uses: hieudt/sun-phpcs@master
+    #   with:
+    #     path: 'app'
+    - name: Build the docker-compose stack
+      run: docker-compose up -d
+    - name: Run test phpcs
+      run: docker exec rogschedule_workspace phpcs --standard=Framgia app
