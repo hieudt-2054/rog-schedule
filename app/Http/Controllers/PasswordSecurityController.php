@@ -4,27 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PasswordSecurity;
+use PragmaRX\Google2FA\Google2FA;
 use Illuminate\Support\Facades\Auth;
+use PragmaRX\Google2FAQRCode\Google2FA as Google2FAQR;
 
 class PasswordSecurityController extends Controller
 {
-    public function show2faForm(Request $request){
+    private $google2fa;
+    
+    private $googleqrcode;
+
+    public function __construct(Google2FA $google2fa, Google2FAQR $googleqrcode)
+    {
+        $this->google2fa = $google2fa;
+        $this->googleqrcode = $googleqrcode;
+    }
+
+    public function show2fa(Request $request){
         $user = Auth::user();
-        $google2fa_url = "";
-        if(count($user->passwordSecurity)){
-            $google2fa = app('pragmarx.google2fa');
-            $google2fa_url = $google2fa->getQRCodeGoogleUrl(
-                '5Balloons 2A DEMO',
+        $google2fa_url = '';
+        if($user->passwordSecurity != null){
+            $google2fa_url = $this->googleqrcode->getQRCodeInline(
+                'RogScheduleApplication',
                 $user->email,
                 $user->passwordSecurity->google2fa_secret
             );
         }
+
         $data = [
-            'user' => $user,
-            'google2fa_url' => $google2fa_url
+            'google2fa_enable' => $user->passwordSecurity ? $user->passwordSecurity->google2fa_enable : 0,
+            'google2fa_url' => $google2fa_url,
+            'passwordSecurity' => $user->passwordSecurity ? $user->passwordSecurity->count() : 0,
         ];
         
-        return view('auth.2fa')->with('data', $data);
+        return response()->json($data, 200);
     }
 
     public function generate2faSecret(Request $request){
@@ -39,20 +52,20 @@ class PasswordSecurityController extends Controller
             'google2fa_secret' => $google2fa->generateSecretKey(),
         ]);
     
-        return response()->json(['success' => 'Create done']);
+        return response()->json(['success' => 'Secret Key is generated, Please verify Code to Enable 2FA']);
     }
 
     public function enable2fa(Request $request){
         $user = Auth::user();
         $google2fa = app('pragmarx.google2fa');
-        $secret = $request->input('verify-code');
+        $secret = $request->input('verifyCode');
         $valid = $google2fa->verifyKey($user->passwordSecurity->google2fa_secret, $secret);
         if($valid){
             $user->passwordSecurity->google2fa_enable = 1;
             $user->passwordSecurity->save();
-            return redirect('2fa')->with('success',"2FA is Enabled Successfully.");
+            return response()->json(['success' => '2FA is Enabled Successfully']);
         }else{
-            return redirect('2fa')->with('error',"Invalid Verification Code, Please try again.");
+            return response()->json(['error' => 'Invalid Verification Code, Please try again.'], 500);
         }
     }
 

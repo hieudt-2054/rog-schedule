@@ -80,13 +80,11 @@ class AuthService
             }
             $user = $this->userRepository->first('email', $request->get('email'));
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-            $google2fa_url = $this->getGoogle2FAUrl($user);
             event(new UserLogin($user));
 
             return [
                 'user' => $user,
                 'access_token' => $token,
-                'google2fa_url' => $google2fa_url,
             ];
         } catch (\Exception $ex) {
             report($ex);
@@ -140,7 +138,7 @@ class AuthService
         if($user->passwordSecurity != null){
             $google2fa = app('pragmarx.google2fa');
             $google2fa_url = $google2fa->getQRCodeUrl(
-                '5Balloons 2A DEMO',
+                'ROGCOMPANY',
                 $user->email,
                 $user->passwordSecurity->google2fa_secret
             );
