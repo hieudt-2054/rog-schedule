@@ -80,13 +80,11 @@ class AuthService
             }
             $user = $this->userRepository->first('email', $request->get('email'));
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-            $google2fa_url = $this->getGoogle2FAUrl($user);
             event(new UserLogin($user));
 
             return [
                 'user' => $user,
                 'access_token' => $token,
-                'google2fa_url' => $google2fa_url,
             ];
         } catch (\Exception $ex) {
             report($ex);
@@ -116,7 +114,7 @@ class AuthService
             } else {
                 $user = $this->userRepository->first('email', $data->user['email']);
             }
-            $google2fa_url = $this->getGoogle2FAUrl($user);
+            $google2faUrl = $this->getGoogle2FAUrl($user);
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
             DB::commit();
             event(new UserLogin($user));
@@ -124,7 +122,7 @@ class AuthService
             return response()->json([
                 'user' => $user,
                 'access_token' => $token,
-                'google2fa_url' => $google2fa_url,
+                'google2fa_url' => $google2faUrl,
             ]);
         } catch (\Exception $ex) {
             DB::rollBack();
@@ -136,16 +134,16 @@ class AuthService
 
     private function getGoogle2FAUrl(User $user)
     {
-        $google2fa_url = '';
-        if($user->passwordSecurity != null){
+        $google2faUrl = '';
+        if ($user->passwordSecurity != null) {
             $google2fa = app('pragmarx.google2fa');
-            $google2fa_url = $google2fa->getQRCodeUrl(
-                '5Balloons 2A DEMO',
+            $google2faUrl = $google2fa->getQRCodeUrl(
+                'ROGCOMPANY',
                 $user->email,
                 $user->passwordSecurity->google2fa_secret
             );
         }
         
-        return $google2fa_url;
+        return $google2faUrl;
     }
 }
