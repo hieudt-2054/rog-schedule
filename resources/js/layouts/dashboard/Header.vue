@@ -85,7 +85,13 @@
                 style="width: 300px"
                 class="ml-0 pl-4"
             >
-                <span class="hidden-sm-and-down">Google Contacts</span>
+            <router-link
+                linkActiveClass="hidden-sm-and-down"
+                to="/me"
+            >
+                <span class="hidden-sm-and-down white--text">Home Schedule</span>
+            </router-link>
+                <!-- <span class="hidden-sm-and-down">Google Contacts</span> -->
             </v-toolbar-title>
             <v-text-field
                 flat
@@ -120,6 +126,7 @@
                       v-for="(item, i) in userMenu"
                       :key="i"
                       @click="() => {}"
+                      :to="item.link"
                     >
                         <v-list-item-title @click="_funcCall(item.method)">
                             <v-icon>{{ item.icon }}</v-icon> {{ item.title }}
@@ -175,8 +182,9 @@ export default {
             { icon: 'mdi-keyboard', text: 'Go to the old version' },
         ],
         userMenu: [
-            { title: 'Profile', icon: 'mdi-note', method: 'none' },
-            { title: 'Log out', icon: 'mdi-logout', method: 'logoutAndRedirect' },
+            { title: 'Profile', icon: 'mdi-note', method: '', link: '' },
+            { title: 'Log out', icon: 'mdi-logout', method: 'logoutAndRedirect', link: '' },
+            { title: '2FA Settings', icon: 'mdi-logout', method: '', link: '2fa' },
         ],
     }),
     methods: {
@@ -192,8 +200,15 @@ export default {
         },
 
         _funcCall (funcName) {
-            this[funcName]()
+            if (funcName) {
+                this[funcName]()
+            }
         },
     },
 }
 </script>
+<style scoped>
+a {
+    text-decoration: none;
+}
+</style>

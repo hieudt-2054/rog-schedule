@@ -22,7 +22,9 @@ Route::group(['middleware' => ['json.response']], function () {
         // Auth routes.
         Route::post('/logout', 'AuthController@logout')->name('logout.api');
         Route::get('/schedule', 'ScheduleController@getAll')->name('schedule.getall');
-
+        Route::post('/generate2FA', 'PasswordSecurityController@generate2faSecret')->name('2fa.generate');
+        Route::get('/get2FA', 'PasswordSecurityController@show2fa')->name('2fa.data');
+        Route::post('/enable2FA', 'PasswordSecurityController@enable2fa')->name('2fa.enable');
         // Standard Routes
         Route::resource('/schedule', 'ScheduleController', ['except' => ['create', 'edit', 'index']]);
     });

@@ -1,7 +1,9 @@
 <template>
   <v-app id="inspire">
     <app-header></app-header>
-    <router-view></router-view>
+    <vue-page-transition name="fade">
+        <router-view></router-view>
+    </vue-page-transition>
     <app-footer></app-footer>
   </v-app>
 </template>
@@ -23,6 +25,7 @@ export default {
     computed: {
         ...mapState({
             token: state => state.auth.token,
+            google2fa: state => state.auth.google2fa_data,
         }),
     },
     data: () => ({
@@ -33,6 +36,7 @@ export default {
             const accessToken = this.token.access_token
 
             ConfigAxios.setAuthorizationHeader(tokenType, accessToken)
+            await this.$store.dispatch('auth/get2FA')
         }
     },
 }

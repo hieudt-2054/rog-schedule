@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Schedule');
     }
+
+    public function passwordSecurity()
+    {
+        return $this->hasOne('App\Models\PasswordSecurity');
+    }
 }

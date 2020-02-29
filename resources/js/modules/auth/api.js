@@ -30,4 +30,27 @@ export default class AuthService {
             .then(response => response)
             .catch(error => error.response)
     }
+
+    /**
+     * @returns {AxiosPromise<any>}
+     */
+    static generate2FA () {
+        return axios.post('/api/generate2FA')
+    }
+
+    /**
+     * @returns {AxiosPromise<any>}
+     */
+    static get2FA () {
+        return axios.get('/api/get2FA')
+            .then(response => response)
+            .catch(error => error.response)
+    }
+
+    /**
+     * @returns {AxiosPromise<any>}
+     */
+    static enable2FA (payload) {
+        return axios.post('/api/enable2FA', payload)
+    }
 }

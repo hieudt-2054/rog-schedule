@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Events\UserLogin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -113,6 +114,7 @@ class AuthService
             } else {
                 $user = $this->userRepository->first('email', $data->user['email']);
             }
+            $google2faUrl = $this->getGoogle2FAUrl($user);
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
             DB::commit();
             event(new UserLogin($user));
@@ -120,6 +122,7 @@ class AuthService
             return response()->json([
                 'user' => $user,
                 'access_token' => $token,
+                'google2fa_url' => $google2faUrl,
             ]);
         } catch (\Exception $ex) {
             DB::rollBack();
@@ -127,5 +130,20 @@ class AuthService
 
             return false;
         }
+    }
+
+    private function getGoogle2FAUrl(User $user)
+    {
+        $google2faUrl = '';
+        if ($user->passwordSecurity != null) {
+            $google2fa = app('pragmarx.google2fa');
+            $google2faUrl = $google2fa->getQRCodeUrl(
+                'ROGCOMPANY',
+                $user->email,
+                $user->passwordSecurity->google2fa_secret
+            );
+        }
+        
+        return $google2faUrl;
     }
 }

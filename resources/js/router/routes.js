@@ -3,6 +3,7 @@ import welcome from '@/pages/welcome.vue'
 import login from '@/modules/auth/views/Login.vue'
 import Admin from '@/components/Admin.vue'
 import Calendar from '@/modules/dashboard/views/Calendar.vue'
+import TwoFactor from '@/modules/auth/views/TwoFactor.vue'
 
 export default [
     {
@@ -34,6 +35,11 @@ export default [
             {
                 path: '/',
                 component: Calendar,
+            },
+            {
+                path: '/2fa',
+                component: TwoFactor,
+                meta: { transition: 'fade' },
             }
         ]
     }

@@ -187,7 +187,7 @@ export default {
     computed: {
         ...mapState({
             token: state => state.auth.token,
-            storeSuccess: state => state.schedule.storeSuccess
+            storeSuccess: state => state.schedule.storeSuccess,
         }),
     },
     methods: {
