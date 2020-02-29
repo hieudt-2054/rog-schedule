@@ -1,5 +1,19 @@
 <template>
     <div>
+        <div class="text-center ma-2">
+          <v-snackbar
+            v-model="scheduleDialog"
+          >
+            {{ scheduleStateMsg }}
+            <v-btn
+              color="pink"
+              text
+              @click="scheduleDialog = false"
+            >
+              Close
+            </v-btn>
+          </v-snackbar>
+        </div>
         <v-btn
             bottom
             color="pink"
@@ -172,6 +186,8 @@ export default {
         dialogColor: false,
         date: '',
         time: null,
+        scheduleDialog: false,
+        scheduleStateMsg: '',
         payload: {
             name: '',
             description: '',
@@ -200,17 +216,37 @@ export default {
                 name: this.payload.name,
                 user_id: this.token.user.id,
                 description: this.payload.description,
-                start: this.payload.startDate + ' ' + this.payload.startTime,
-                end: this.payload.endDate + ' ' + this.payload.endTime,
+                start: this.payload.startDate,
+                end: this.payload.endDate,
                 color_code: this.payload.color.hex,
+            }
+
+            if (this.payload.startTime !== null) {
+                data.start += ' ' + this.payload.startTime
+            } else {
+                data.start += ' 00:00'
+            }
+
+            if (this.payload.endDate === null) {
+                data.end = this.payload.startDate
+            }
+
+            if (this.payload.endTime !== null) {
+                data.end += ' ' + this.payload.endTime
+            } else {
+                data.end += ' 24:00'
             }
 
             await this.storeSchedule({
                 vue: this,
                 params: data,
             })
+            this.scheduleDialog = true
             if (this.storeSuccess) {
                 await this.$store.dispatch('schedule/actionGetScheduleByUser')
+                this.scheduleStateMsg = 'Schedule Added !'
+            } else {
+                this.scheduleStateMsg = 'Schedule Add Failed !'
             }
         },
     },

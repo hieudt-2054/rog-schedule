@@ -17,6 +17,7 @@ class Schedule extends Model
         'start',
         'end',
         'notification',
+        'color_code',
         'user_id',
     ];
 

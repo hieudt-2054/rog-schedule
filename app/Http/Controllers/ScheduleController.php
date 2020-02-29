@@ -31,7 +31,7 @@ class ScheduleController extends Controller
     {
         $schedule = $this->scheduleService->store($request->all());
 
-        return response()->json($schedule);
+        return response()->json($schedule, $schedule ? 200 : 500);
     }
 
     /**
