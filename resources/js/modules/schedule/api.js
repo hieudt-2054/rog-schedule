@@ -18,4 +18,8 @@ export default class ScheduleService {
     static store (payload) {
         return axios.post('/api/schedule', payload)
     }
+
+    static destroy (payload) {
+        return axios.delete(`/api/schedule/${payload}`)
+    }
 }

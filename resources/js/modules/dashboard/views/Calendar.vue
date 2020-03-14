@@ -13,8 +13,6 @@
           <v-btn fab text small @click="next">
             <v-icon small>mdi-chevron-right</v-icon>
           </v-btn>
-
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
           <div class="flex-grow-1"></div>
           <v-menu bottom right>
             <template v-slot:activator="{ on }">
@@ -47,6 +45,7 @@
           :event-margin-bottom="3"
           :now="today"
           :type="type"
+          :short-months="false"
           @click:event="showEvent"
           @click:more="viewDay"
           @click:date="viewDay"
@@ -77,7 +76,7 @@
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
               <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
+                <v-icon @click="removeSchedule">mdi-trash-can</v-icon>
               </v-btn>
             </v-toolbar>
             <v-card-text>
@@ -112,15 +111,7 @@ export default {
             week: 'Week',
             day: 'Day',
         },
-        events: [
-            {
-                color: '#1976D2',
-                start: '2020-01-24 23:00',
-                end: '2020-01-24 24:00',
-                name: 'happy new year',
-                details: 'Đây là mô tả',
-            },
-        ],
+        events: [],
         start: null,
         end: null,
         selectedEvent: {},
@@ -166,11 +157,14 @@ export default {
     mounted () {
         this.getSchedule()
     },
-
+    watch: {
+        schedules: function (val) {
+            this.events = val
+        },
+    },
     methods: {
         async getSchedule () {
             await this.$store.dispatch('schedule/actionGetScheduleByUser')
-            this.events = this.schedules
         },
         viewDay ({ date }) {
             this.focus = date
@@ -215,6 +209,14 @@ export default {
 
             nativeEvent.stopPropagation()
         },
+        removeSchedule () {
+            console.log(this.selectedEvent);
+        }
     },
 }
 </script>
+<style>
+.col {
+  padding: 0px;
+}
+</style>
