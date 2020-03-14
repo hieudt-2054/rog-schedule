@@ -125,6 +125,7 @@ class ScheduleService
                 'end' => $schedule->end,
                 'name' => $schedule->name,
                 'details' => $schedule->description,
+                'id' => $schedule->id,
             ];
         });
 
