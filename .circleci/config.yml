@@ -82,10 +82,7 @@ workflows:
   version: 2
   notify_deploy:
     jobs:
-      - build
       - deploy:
-          requires:
-            - build
           filters:
             branches:
               only: develop

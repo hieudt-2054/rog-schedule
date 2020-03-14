@@ -3,12 +3,12 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Traits\MonitorExceptionHandlerTrait;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use PDOException;
-use UnexpectedValueException;
 
 class Handler extends ExceptionHandler
 {
+    use MonitorExceptionHandlerTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -39,6 +39,7 @@ class Handler extends ExceptionHandler
         if (app()->bound('sentry') && $this->shouldReport($exception)) {
             app('sentry')->captureException($exception);
         }
+        $this->sendExceptionToChatWork($exception);
 
         parent::report($exception);
     }

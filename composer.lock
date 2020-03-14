@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "979b6706f7b9216e3c72a471045685e5",
+    "content-hash": "ab3235ba916578d63c11f53c6ed36067",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
@@ -129,6 +129,60 @@
                 "support"
             ],
             "time": "2019-10-02T18:20:38+00:00"
+        },
+        {
+            "name": "avengers-code-lovers/laravel-log-monitoring",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AvengersCodeLovers/laravel-log-monitoring.git",
+                "reference": "bd9c0c200f1c9c085e1cca7b8f4b9aed1ff88010"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AvengersCodeLovers/laravel-log-monitoring/zipball/bd9c0c200f1c9c085e1cca7b8f4b9aed1ff88010",
+                "reference": "bd9c0c200f1c9c085e1cca7b8f4b9aed1ff88010",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "~5.7.0|~5.8.0|^6.0|^7.0",
+                "illuminate/support": "~5.7.0|~5.8.0|^6.0|^7.0",
+                "php": ">=7.1",
+                "wataridori/chatwork-sdk": "^0.3.1"
+            },
+            "require-dev": {
+                "illuminate/contracts": "~5.7.0|~5.8.0|^6.0|^7.0",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AvengersGroup\\MonitoringServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AvengersGroup\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "AvengersCodeLovers",
+                    "email": "nguyen.huu.su@sun-asterisk.com"
+                }
+            ],
+            "description": "Laravel log monitoring with log Laravel and log queue from avengers code lovers",
+            "keywords": [
+                "chatwork",
+                "laravel",
+                "monitoring",
+                "queue"
+            ],
+            "time": "2020-02-18T10:56:24+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -5669,6 +5723,39 @@
                 "environment"
             ],
             "time": "2019-09-10T21:37:39+00:00"
+        },
+        {
+            "name": "wataridori/chatwork-sdk",
+            "version": "0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wataridori/chatwork-sdk.git",
+                "reference": "f0817ef9fe6b657849ba972e1e701dde1a1aa537"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wataridori/chatwork-sdk/zipball/f0817ef9fe6b657849ba972e1e701dde1a1aa537",
+                "reference": "f0817ef9fe6b657849ba972e1e701dde1a1aa537",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "wataridori\\ChatworkSDK\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Tran Duc Thang",
+                    "email": "thangtd90@gmail.com"
+                }
+            ],
+            "description": "Just a non-official SDK for Chatwork",
+            "time": "2019-07-29T03:24:59+00:00"
         }
     ],
     "packages-dev": [
@@ -7700,7 +7787,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "avengers-code-lovers/laravel-log-monitoring": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

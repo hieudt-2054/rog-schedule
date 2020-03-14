@@ -36,4 +36,12 @@ return [
         'redirect'      => env('GOOGLE_URL'),
     ],
 
+    'chatwork' => [
+        'api_key' => env('CHATWORK_API_KEY'),
+        'room_id_sos' => env('CHATWORK_API_ROOM_ID'),
+        'role' => [
+            'admin' => 'admin',
+        ]
+    ]
+
 ];
